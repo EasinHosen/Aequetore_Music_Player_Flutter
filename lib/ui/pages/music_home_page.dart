@@ -19,7 +19,8 @@ class _MusicHomePageState extends State<MusicHomePage> {
   Widget build(BuildContext context) {
     SongModel? song;
     final player = AudioPlayer();
-    String path = '';
+    String path =
+        '/storage/emulated/0/Download/Bhalobashar_Pongktimala-Tahsan_FusionBD.Com.mp3';
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -40,11 +41,9 @@ class _MusicHomePageState extends State<MusicHomePage> {
                     onTap: () {
                       Navigator.pushNamed(context, MyAudioList.routeName)
                           .then((value) {
-                        setState(() {
-                          song = value as SongModel?;
-                          path = song!.data;
-                          print(path);
-                        });
+                        song = value as SongModel?;
+                        path = song!.data;
+                        print(path);
                       });
                     },
                     child: SizedBox(
@@ -70,10 +69,15 @@ class _MusicHomePageState extends State<MusicHomePage> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        song?.uri ?? 'assets/images/music_thumb.png',
-                        height: height / 2.3,
-                      ),
+                      child: song?.id == null
+                          ? Image.asset(
+                              song?.uri ?? 'assets/images/music_thumb.png',
+                              height: height / 2.3,
+                            )
+                          : QueryArtworkWidget(
+                              id: song!.id,
+                              type: ArtworkType.AUDIO,
+                            ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
