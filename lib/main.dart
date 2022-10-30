@@ -1,9 +1,16 @@
+import 'package:aequatore_music_player/providers/song_provider.dart';
 import 'package:aequatore_music_player/ui/pages/music_home_page.dart';
-import 'package:aequatore_music_player/ui/pages/my_audio_list.dart';
+import 'package:aequatore_music_player/ui/pages/my_audio_list_page.dart';
+import 'package:aequatore_music_player/ui/pages/neu_test.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => SongProvider()..requestPermission(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,10 +25,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: MusicHomePage.routeName,
+      initialRoute: MyAudioList.routeName,
       routes: {
         MusicHomePage.routeName: (context) => const MusicHomePage(),
         MyAudioList.routeName: (context) => const MyAudioList(),
+        NeuTest.routeName: (context) => const NeuTest(),
+
         // StorageTestPage.routeName: (context) => const StorageTestPage(),
       },
     );
